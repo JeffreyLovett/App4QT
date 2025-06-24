@@ -156,9 +156,7 @@
             flex-direction: column;
             align-items: center;
             margin-top: 20px;
-        }
-
-        .wheel {
+        }        .wheel {
             width: 250px;
             height: 250px;
             border-radius: 50%;
@@ -167,6 +165,26 @@
             border: 8px solid #ff6b6b;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             transition: transform 3s cubic-bezier(0.2, 0.8, 0.7, 0.99);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ffb4b4, #fecfef);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .wheel-section {
@@ -266,22 +284,11 @@
             <div class="section-title"><span class="emoji">💡</span>Tip of the Day</div>
             <button class="button" onclick="getTip()">Get My Daily Tip!</button>
             <div id="tip-content" class="content-display"></div>
-        </div>
-
-        <!-- Self-Care Spin Wheel Section -->
+        </div>        <!-- Self-Care Spin Wheel Section -->
         <div class="content-section">
             <div class="section-title"><span class="emoji">🧘‍♀️</span>Self-Care Spinner</div>
             <div class="wheel-container">
-                <div class="wheel" id="selfcare-wheel">
-                    <div class="wheel-section" style="background: #ff6b6b; transform: rotate(0deg);"><span>🛁</span></div>
-                    <div class="wheel-section" style="background: #4ecdc4; transform: rotate(45deg);"><span>🧴</span></div>
-                    <div class="wheel-section" style="background: #45b7d1; transform: rotate(90deg);"><span>🧘‍♀️</span></div>
-                    <div class="wheel-section" style="background: #f9ca24; transform: rotate(135deg);"><span>📓</span></div>
-                    <div class="wheel-section" style="background: #6c5ce7; transform: rotate(180deg);"><span>🤸‍♀️</span></div>
-                    <div class="wheel-section" style="background: #a29bfe; transform: rotate(225deg);"><span>📚</span></div>
-                    <div class="wheel-section" style="background: #fd79a8; transform: rotate(270deg);"><span>🌿</span></div>
-                    <div class="wheel-section" style="background: #00b894; transform: rotate(315deg);"><span>🎵</span></div>
-                </div>
+                <div class="wheel" id="selfcare-wheel">🛁</div>
                 <button class="button spin-button" onclick="spinSelfCareWheel()">Spin for Self-Care!</button>
                 <div id="selfcare-result" class="wheel-result"></div>
             </div>
@@ -291,17 +298,7 @@
         <div class="content-section">
             <div class="section-title"><span class="emoji">🎡</span>Fun Project Ideas</div>
             <div class="wheel-container">
-                <div class="wheel" id="wheel">
-                    <div class="wheel-section" style="background: #ff6b6b; transform: rotate(0deg);"><span>👻</span></div>
-                    <div class="wheel-section" style="background: #4ecdc4; transform: rotate(40deg);"><span>😴</span></div>
-                    <div class="wheel-section" style="background: #45b7d1; transform: rotate(80deg);"><span>💧</span></div>
-                    <div class="wheel-section" style="background: #f9ca24; transform: rotate(120deg);"><span>🥷</span></div>
-                    <div class="wheel-section" style="background: #6c5ce7; transform: rotate(160deg);"><span>🖤</span></div>
-                    <div class="wheel-section" style="background: #a29bfe; transform: rotate(200deg);"><span>🎨</span></div>
-                    <div class="wheel-section" style="background: #fd79a8; transform: rotate(240deg);"><span>💃</span></div>
-                    <div class="wheel-section" style="background: #00b894; transform: rotate(280deg);"><span>🔬</span></div>
-                    <div class="wheel-section" style="background: #e17055; transform: rotate(320deg);"><span>🧁</span></div>
-                </div>
+                <div class="wheel" id="wheel">👻</div>
                 <button class="button spin-button" onclick="spinWheel()">Spin for Fun!</button>
                 <div id="wheel-result" class="wheel-result"></div>
             </div>
@@ -417,7 +414,77 @@
             "☕ Make your bed as soon as you get up - it's a small win that starts your day right!"
         ];
 
-        // Enhanced animal image collection with seasonal and mood categories
+        // Updated arrays with cycling emojis for slot machine effect
+        const slotEmojis = [
+            '🎰', '🎲', '🎪', '🎭', '🎨', '🎯', '🎈', '🎀', '🎁', '🎂',
+            '🌟', '⭐', '✨', '💫', '🌙', '☀️', '🌈', '🦄', '🎶', '🎵'
+        ];
+
+        // Sound effects for cute interactions
+        const sounds = {
+            spin: () => {
+                // Create a cute spinning sound using Web Audio API
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+                oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.2);
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.3);
+            },
+            
+            win: () => {
+                // Create a happy winning sound
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Happy ascending notes
+                oscillator.frequency.setValueAtTime(523, audioContext.currentTime); // C5
+                oscillator.frequency.setValueAtTime(659, audioContext.currentTime + 0.1); // E5
+                oscillator.frequency.setValueAtTime(784, audioContext.currentTime + 0.2); // G5
+                oscillator.frequency.setValueAtTime(1047, audioContext.currentTime + 0.3); // C6
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            },
+            
+            click: () => {
+                // Cute button click sound
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(1000, audioContext.currentTime + 0.05);
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            }
+        };
+
+        // Self-care activities with emojis
         const animalImages = [
             // Morning Energy Boosters
             {
@@ -600,9 +667,8 @@
         ];
 
         let isSpinning = false;
-        let isSelfCareSpinning = false;
-
-        function getAnimalPic(forcedMood = null) {
+        let isSelfCareSpinning = false;        function getAnimalPic(forcedMood = null) {
+            try { sounds.click(); } catch(e) {}
             const timeOfDay = new Date().getHours();
             let targetMood = forcedMood;
             
@@ -667,9 +733,8 @@
             `;
             
             content.classList.add('show');
-        }
-
-        function getCuteAnimal() {
+        }        function getCuteAnimal() {
+            try { sounds.click(); } catch(e) {}
             const randomAnimal = animalFacts[Math.floor(Math.random() * animalFacts.length)];
             const content = document.getElementById('animal-content');
             
@@ -685,6 +750,7 @@
         }
 
         function getInspiration() {
+            try { sounds.click(); } catch(e) {}
             const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
             const content = document.getElementById('quote-content');
             
@@ -697,6 +763,7 @@
         }
 
         function getFunnyStory() {
+            try { sounds.click(); } catch(e) {}
             const randomStory = funnyStories[Math.floor(Math.random() * funnyStories.length)];
             const content = document.getElementById('story-content');
             
@@ -711,75 +778,112 @@
         }
 
         function getTip() {
+            try { sounds.click(); } catch(e) {}
             const randomTip = tips[Math.floor(Math.random() * tips.length)];
             const content = document.getElementById('tip-content');
             
             content.innerHTML = `<div class="tip-text">${randomTip}</div>`;
             content.classList.add('show');
-        }
-
-        function spinSelfCareWheel() {
+        }function spinSelfCareWheel() {
             if (isSelfCareSpinning) return;
             
             isSelfCareSpinning = true;
             const wheel = document.getElementById('selfcare-wheel');
             const result = document.getElementById('selfcare-result');
+            result.innerHTML = '<div style="font-size: 1.2em; color: #ff6b6b;">🎡 Spinning...</div>';
             
-            // Random rotation (multiple full spins + random position)
-            const spins = 5 + Math.floor(Math.random() * 5); // 5-9 full rotations
+            // Play cute spinning sound
+            try { sounds.spin(); } catch(e) {}
+            
+            // Slot machine cycling effect
+            let cycleCount = 0;
+            const cycleInterval = setInterval(() => {
+                const randomEmoji = slotEmojis[Math.floor(Math.random() * slotEmojis.length)];
+                wheel.innerHTML = randomEmoji;
+                cycleCount++;
+                
+                if (cycleCount > 30) { // Cycle through ~30 emojis
+                    clearInterval(cycleInterval);
+                }
+            }, 100);
+            
+            // Wheel rotation
+            const spins = 8 + Math.floor(Math.random() * 5);
             const finalRotation = Math.floor(Math.random() * 360);
             const totalRotation = (spins * 360) + finalRotation;
-            
             wheel.style.transform = `rotate(${totalRotation}deg)`;
             
-            // Calculate which section we landed on (8 sections)
+            // Calculate winner
             const sectionAngle = 360 / 8;
             const normalizedAngle = (360 - (finalRotation % 360)) % 360;
             const sectionIndex = Math.floor(normalizedAngle / sectionAngle);
             
             setTimeout(() => {
                 const activity = selfCareActivities[sectionIndex];
+                wheel.innerHTML = activity.emoji; // Show winning emoji
+                
+                // Play winning sound
+                try { sounds.win(); } catch(e) {}
+                
                 result.innerHTML = `
-                    <div style="text-align: center;">
-                        <div style="font-size: 1.5em; margin-bottom: 5px;">${activity.emoji}</div>
-                        <div style="font-size: 1.1em; font-weight: bold; margin-bottom: 5px;">${activity.name}</div>
-                        <div style="font-size: 0.9em; color: #666; font-style: italic;">${activity.description}</div>
+                    <div style="text-align: center; animation: bounceIn 0.5s ease-out;">
+                        <div style="font-size: 3em; margin-bottom: 10px;">${activity.emoji}</div>
+                        <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 8px; color: #ff6b6b;">${activity.name}</div>
+                        <div style="font-size: 0.9em; color: #666; font-style: italic; line-height: 1.3;">${activity.description}</div>
                     </div>
                 `;
                 isSelfCareSpinning = false;
-            }, 3000);
-        }
-
-        function spinWheel() {
+            }, 4000);
+        }        function spinWheel() {
             if (isSpinning) return;
             
             isSpinning = true;
             const wheel = document.getElementById('wheel');
             const result = document.getElementById('wheel-result');
+            result.innerHTML = '<div style="font-size: 1.2em; color: #4ecdc4;">🎡 Spinning...</div>';
             
-            // Random rotation (multiple full spins + random position)
-            const spins = 5 + Math.floor(Math.random() * 5); // 5-9 full rotations
+            // Play cute spinning sound
+            try { sounds.spin(); } catch(e) {}
+            
+            // Slot machine cycling effect
+            let cycleCount = 0;
+            const cycleInterval = setInterval(() => {
+                const randomEmoji = slotEmojis[Math.floor(Math.random() * slotEmojis.length)];
+                wheel.innerHTML = randomEmoji;
+                cycleCount++;
+                
+                if (cycleCount > 30) { // Cycle through ~30 emojis
+                    clearInterval(cycleInterval);
+                }
+            }, 100);
+            
+            // Wheel rotation
+            const spins = 8 + Math.floor(Math.random() * 5);
             const finalRotation = Math.floor(Math.random() * 360);
             const totalRotation = (spins * 360) + finalRotation;
-            
             wheel.style.transform = `rotate(${totalRotation}deg)`;
             
-            // Calculate which section we landed on (9 sections)
+            // Calculate winner
             const sectionAngle = 360 / 9;
             const normalizedAngle = (360 - (finalRotation % 360)) % 360;
             const sectionIndex = Math.floor(normalizedAngle / sectionAngle);
             
             setTimeout(() => {
                 const activity = wheelActivities[sectionIndex];
+                wheel.innerHTML = activity.emoji; // Show winning emoji
+                
+                // Play winning sound
+                try { sounds.win(); } catch(e) {}
+                
                 result.innerHTML = `
-                    <div style="text-align: center;">
-                        <div style="font-size: 1.5em; margin-bottom: 5px;">${activity.emoji}</div>
-                        <div style="font-size: 1.1em; font-weight: bold; margin-bottom: 5px;">${activity.name}</div>
-                        <div style="font-size: 0.9em; color: #666; font-style: italic;">${activity.description}</div>
+                    <div style="text-align: center; animation: bounceIn 0.5s ease-out;">
+                        <div style="font-size: 3em; margin-bottom: 10px;">${activity.emoji}</div>
+                        <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 8px; color: #4ecdc4;">${activity.name}</div>
+                        <div style="font-size: 0.9em; color: #666; font-style: italic; line-height: 1.3;">${activity.description}</div>
                     </div>
                 `;
                 isSpinning = false;
-            }, 3000);
+            }, 4000);
         }
 
         // Add some sparkle effects
