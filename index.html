@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>App4QT ☀️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ffb4b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .heart {
+            font-size: 2em;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #ffb4b4;
+            transition: all 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Comic Sans MS', cursive;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .content-display {
+            background: rgba(255, 182, 193, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #ff6b6b;
+            min-height: 60px;
+            display: none;
+        }
+
+        .content-display.show {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animal-pic {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .quote-text {
+            font-style: italic;
+            font-size: 1.1em;
+            line-height: 1.4;
+            color: #555;
+        }
+
+        .quote-author {
+            text-align: right;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .story-text {
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .tip-text {
+            background: linear-gradient(45deg, #fff3cd, #fff8e1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+            color: #856404;
+            font-weight: bold;
+        }
+
+        /* Spin Wheel Styles */
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .wheel {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #ff6b6b;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 3s cubic-bezier(0.2, 0.8, 0.7, 0.99);
+        }
+
+        .wheel-section {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: right bottom;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 5px;
+        }
+
+        .spin-button {
+            margin-top: 20px;
+            background: linear-gradient(45deg, #28a745, #34ce57);
+            font-size: 1.2em;
+            padding: 15px 30px;
+        }
+
+        .wheel-result {
+            margin-top: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-align: center;
+            min-height: 25px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            
+            .wheel {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>App4QT!</h1>
+            <div class="heart">💖</div>
+        </div>
+
+        <!-- Cute Animals Section -->
+        <div class="content-section">
+            <div class="section-title"><span class="emoji">🐾</span>Cute Animal Magic</div>
+            <button class="button" onclick="getCuteAnimal()">Get My Daily Cute Animal!</button>
+            <div id="animal-content" class="content-display"></div>
+        </div>
+
+        <!-- Instagram-Style Animal Pics Section -->
+        <div class="content-section">
+            <div class="section-title"><span class="emoji">📸</span>Adorable Animal Moments</div>
+            <button class="button" onclick="getAnimalPic()">Show Me Cuteness!</button>
+            <button class="button" onclick="getAnimalPic('energetic')" style="background: linear-gradient(45deg, #00b894, #00cec9); font-size: 0.9em;">Energy Boost!</button>
+            <button class="button" onclick="getAnimalPic('cozy')" style="background: linear-gradient(45deg, #a29bfe, #6c5ce7); font-size: 0.9em;">Cozy Mode!</button>
+            <div id="animal-pic-content" class="content-display"></div>
+        </div>
+
+        <!-- Inspiring Quotes Section -->
+        <div class="content-section">
+            <div class="section-title"><span class="emoji">✨</span>Daily Inspiration</div>
+            <button class="button" onclick="getInspiration()">Inspire Me!</button>
+            <div id="quote-content" class="content-display"></div>
+        </div>
+
+        <!-- Funny Stories Section -->
+        <div class="content-section">
+            <div class="section-title"><span class="emoji">😄</span>Giggle Time</div>
+            <button class="button" onclick="getFunnyStory()">Make Me Laugh!</button>
+            <div id="story-content" class="content-display"></div>
+        </div>
+
+        <!-- Tip of the Day Section -->
+        <div class="content-section">
+            <div class="section-title"><span class="emoji">💡</span>Tip of the Day</div>
+            <button class="button" onclick="getTip()">Get My Daily Tip!</button>
+            <div id="tip-content" class="content-display"></div>
+        </div>
+
+        <!-- Self-Care Spin Wheel Section -->
+        <div class="content-section">
+            <div class="section-title"><span class="emoji">🧘‍♀️</span>Self-Care Spinner</div>
+            <div class="wheel-container">
+                <div class="wheel" id="selfcare-wheel">
+                    <div class="wheel-section" style="background: #ff6b6b; transform: rotate(0deg);"><span>🛁</span></div>
+                    <div class="wheel-section" style="background: #4ecdc4; transform: rotate(45deg);"><span>🧴</span></div>
+                    <div class="wheel-section" style="background: #45b7d1; transform: rotate(90deg);"><span>🧘‍♀️</span></div>
+                    <div class="wheel-section" style="background: #f9ca24; transform: rotate(135deg);"><span>📓</span></div>
+                    <div class="wheel-section" style="background: #6c5ce7; transform: rotate(180deg);"><span>🤸‍♀️</span></div>
+                    <div class="wheel-section" style="background: #a29bfe; transform: rotate(225deg);"><span>📚</span></div>
+                    <div class="wheel-section" style="background: #fd79a8; transform: rotate(270deg);"><span>🌿</span></div>
+                    <div class="wheel-section" style="background: #00b894; transform: rotate(315deg);"><span>🎵</span></div>
+                </div>
+                <button class="button spin-button" onclick="spinSelfCareWheel()">Spin for Self-Care!</button>
+                <div id="selfcare-result" class="wheel-result"></div>
+            </div>
+        </div>
+
+        <!-- Spin Wheel Section -->
+        <div class="content-section">
+            <div class="section-title"><span class="emoji">🎡</span>Fun Project Ideas</div>
+            <div class="wheel-container">
+                <div class="wheel" id="wheel">
+                    <div class="wheel-section" style="background: #ff6b6b; transform: rotate(0deg);"><span>👻</span></div>
+                    <div class="wheel-section" style="background: #4ecdc4; transform: rotate(40deg);"><span>😴</span></div>
+                    <div class="wheel-section" style="background: #45b7d1; transform: rotate(80deg);"><span>💧</span></div>
+                    <div class="wheel-section" style="background: #f9ca24; transform: rotate(120deg);"><span>🥷</span></div>
+                    <div class="wheel-section" style="background: #6c5ce7; transform: rotate(160deg);"><span>🖤</span></div>
+                    <div class="wheel-section" style="background: #a29bfe; transform: rotate(200deg);"><span>🎨</span></div>
+                    <div class="wheel-section" style="background: #fd79a8; transform: rotate(240deg);"><span>💃</span></div>
+                    <div class="wheel-section" style="background: #00b894; transform: rotate(280deg);"><span>🔬</span></div>
+                    <div class="wheel-section" style="background: #e17055; transform: rotate(320deg);"><span>🧁</span></div>
+                </div>
+                <button class="button spin-button" onclick="spinWheel()">Spin for Fun!</button>
+                <div id="wheel-result" class="wheel-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cute animal facts and descriptions
+        const animalFacts = [
+            {
+                animal: "🐼 Pandas",
+                fact: "Baby pandas are born pink and about the size of a stick of butter! They don't develop their black and white markings until they're a few weeks old.",
+                description: "Imagine the cutest little pink jelly bean rolling around - that's a baby panda!"
+            },
+            {
+                animal: "🐧 Penguins",
+                fact: "Penguins propose to their mates by giving them the perfect pebble! They search beaches for the smoothest, most beautiful stone.",
+                description: "Talk about romantic! These tuxedo-wearing sweethearts know how to win hearts."
+            },
+            {
+                animal: "🦦 Otters",
+                fact: "Sea otters hold hands while sleeping so they don't float away from each other. They also keep their favorite rock in a special pocket!",
+                description: "Nature's way of saying 'never let go' - the ultimate couple goals!"
+            },
+            {
+                animal: "🐨 Koalas",
+                fact: "Koalas sleep 18-22 hours a day and have fingerprints just like humans! Baby koalas are called joeys and fit in a teaspoon when born.",
+                description: "Living the dream life - professional sleepers with the softest hugs!"
+            },
+            {
+                animal: "🦌 Deer",
+                fact: "Baby deer (fawns) have no scent for their first few days to protect them from predators. They're nature's perfect hide-and-seek champions!",
+                description: "With those big eyes and wobbly legs, they're impossibly adorable!"
+            },
+            {
+                animal: "🐰 Bunnies",
+                fact: "Rabbits can jump nearly 3 feet high and do a happy dance called a 'binky' when they're excited - jumping and twisting in the air!",
+                description: "Pure joy on four paws - bouncing happiness wherever they go!"
+            }
+        ];
+
+        // Inspiring quotes
+        const quotes = [
+            {
+                text: "The secret of getting ahead is getting started.",
+                author: "Mark Twain"
+            },
+            {
+                text: "You are never too old to set another goal or to dream a new dream.",
+                author: "C.S. Lewis"
+            },
+            {
+                text: "Believe you can and you're halfway there.",
+                author: "Theodore Roosevelt"
+            },
+            {
+                text: "The only way to do great work is to love what you do.",
+                author: "Steve Jobs"
+            },
+            {
+                text: "Life is what happens to us while we are making other plans.",
+                author: "Allen Saunders"
+            },
+            {
+                text: "The future belongs to those who believe in the beauty of their dreams.",
+                author: "Eleanor Roosevelt"
+            },
+            {
+                text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
+                author: "Ralph Waldo Emerson"
+            },
+            {
+                text: "You can't cross the sea merely by standing and staring at the water.",
+                author: "Rabindranath Tagore"
+            }
+        ];
+
+        // Funny mini-stories
+        const funnyStories = [
+            {
+                title: "The Sock Mystery",
+                story: "Every morning, Jerry discovered he was missing a sock. After setting up a hidden camera, he found the culprit: his mischievous pet parrot Charlie, who had been collecting them to build the world's coziest nest!"
+            },
+            {
+                title: "The Great Cookie Heist",
+                story: "Sarah kept finding cookie crumbs leading from the kitchen to her dog's bed. When she followed the trail, she discovered her 'sneaky' golden retriever had learned to open the cookie jar with his nose and was sharing with the neighbor's cat through the window!"
+            },
+            {
+                title: "The Wi-Fi Warrior",
+                story: "Mike's internet kept cutting out every day at 3 PM. After calling tech support five times, he realized his neighbor's robotic vacuum was bumping into his router during its daily cleaning cycle, causing a 'technical malfunction' that was really just a very determined robot!"
+            },
+            {
+                title: "The Delivery Mix-Up",
+                story: "Emma ordered a phone case online but received a package of rubber ducky keychains instead. She was about to return them when she realized they made perfect gifts for her whole family - sometimes the universe knows what you need better than you do!"
+            },
+            {
+                title: "The Plant Whisperer",
+                story: "Tom's houseplants kept thriving despite his terrible gardening skills. He finally discovered his cat had been secretly watering them by knocking over his water glass in the exact same spot every morning - the world's most accidental green thumb!"
+            }
+        ];
+
+        // Daily tips
+        const tips = [
+            "💧 Start your day with a glass of water - it helps wake up your body and mind!",
+            "🌱 Put your phone down for the first 30 minutes after waking up to start the day peacefully.",
+            "☀️ Open your curtains immediately upon waking - natural light helps regulate your body clock!",
+            "🎵 Create a morning playlist that makes you smile - music is instant mood magic!",
+            "📝 Write down three things you're grateful for each morning to set a positive tone.",
+            "🥐 Prepare something for breakfast the night before to make mornings less rushed.",
+            "🧘‍♀️ Take 5 deep breaths before getting out of bed - it helps center your mind.",
+            "🌸 Keep fresh flowers or plants in your bedroom - nature brings instant joy!",
+            "💌 Leave yourself encouraging sticky notes where you'll see them in the morning.",
+            "☕ Make your bed as soon as you get up - it's a small win that starts your day right!"
+        ];
+
+        // Enhanced animal image collection with seasonal and mood categories
+        const animalImages = [
+            // Morning Energy Boosters
+            {
+                category: "energy",
+                season: "all",
+                caption: "🐱 Monday Morning Mood: Activated!",
+                description: "Fluffy orange tabby doing yoga stretches with the sunrise",
+                imageName: "energetic_cat_yoga.jpg",
+                mood: "energetic"
+            },
+            {
+                category: "energy", 
+                season: "all",
+                caption: "🐕 Ready to Conquer the Day!",
+                description: "Golden retriever puppy wearing tiny superhero cape, heroic pose",
+                imageName: "superhero_puppy.jpg",
+                mood: "motivated"
+            },
+            {
+                category: "funny",
+                season: "all", 
+                caption: "🦝 When You're Productive AF",
+                description: "Raccoon in glasses at tiny desk with coffee, multiple monitors",
+                imageName: "productive_raccoon.jpg",
+                mood: "busy"
+            },
+            
+            // Cozy & Comfort
+            {
+                category: "cozy",
+                season: "fall",
+                caption: "🐻 Autumn Vibes Loading...",
+                description: "Baby bear cub wrapped in plaid scarf, surrounded by golden leaves",
+                imageName: "autumn_bear_cub.jpg", 
+                mood: "cozy"
+            },
+            {
+                category: "cozy",
+                season: "winter",
+                caption: "❄️ Winter Snuggle Champion",
+                description: "Arctic fox kit curled up in snow, looking impossibly fluffy",
+                imageName: "snowy_fox_kit.jpg",
+                mood: "peaceful"
+            },
+            {
+                category: "sleepy",
+                season: "all",
+                caption: "😴 Professional Nap Instructor",
+                description: "Koala in tiny pajamas sleeping on eucalyptus branch",
+                imageName: "sleepy_koala_pjs.jpg",
+                mood: "sleepy"
+            },
+
+            // Adventure & Fun
+            {
+                category: "adventure",
+                season: "spring",
+                caption: "🌸 Spring Adventure Squad!",
+                description: "Baby bunnies wearing tiny hiking boots in flower field",
+                imageName: "hiking_bunnies_spring.jpg",
+                mood: "adventurous"
+            },
+            {
+                category: "adventure",
+                season: "summer", 
+                caption: "🏖️ Beach Day Champion",
+                description: "Corgi wearing sunglasses and lei, surfboard background",
+                imageName: "beach_corgi_summer.jpg",
+                mood: "fun"
+            },
+            {
+                category: "funny",
+                season: "all",
+                caption: "🦘 Zoom Meeting Survivor",
+                description: "Kangaroo joey popping out of pouch wearing business tie",
+                imageName: "business_kangaroo.jpg",
+                mood: "professional"
+            },
+
+            // Wholesome Moments
+            {
+                category: "wholesome",
+                season: "all",
+                caption: "💕 Friendship Goals Achieved",
+                description: "Unlikely duo: tiny kitten and baby chick sharing food bowl",
+                imageName: "kitten_chick_friendship.jpg",
+                mood: "heartwarming"
+            },
+            {
+                category: "wholesome",
+                season: "all",
+                caption: "🌈 Pure Joy Captured",
+                description: "Puppy playing in field of bubbles, rainbow in background",
+                imageName: "puppy_rainbow_bubbles.jpg",
+                mood: "joyful"
+            },
+            {
+                category: "funny",
+                season: "all",
+                caption: "🐧 Formal Friday Champion",
+                description: "Penguin wearing bow tie, holding briefcase, looking very serious",
+                imageName: "formal_penguin.jpg",
+                mood: "sophisticated"
+            },
+
+            // Seasonal Specials
+            {
+                category: "holiday",
+                season: "winter",
+                caption: "🎄 Holiday Spirit Level: Maximum",
+                description: "Reindeer calf wearing jingle bell collar, snowy forest background",
+                imageName: "holiday_reindeer.jpg",
+                mood: "festive"
+            },
+            {
+                category: "cozy",
+                season: "fall",
+                caption: "🍂 Pumpkin Spice Everything",
+                description: "Orange kitten sitting in pumpkin patch, autumn leaves falling",
+                imageName: "pumpkin_kitten_fall.jpg",
+                mood: "autumnal"
+            },
+            {
+                category: "energy",
+                season: "spring",
+                caption: "🌻 Spring Cleaning Expert",
+                description: "Busy bee cartoon character with cleaning supplies, flowers blooming",
+                imageName: "spring_cleaning_bee.jpg",
+                mood: "productive"
+            }
+        ];
+
+        // Get current season
+        function getCurrentSeason() {
+            const month = new Date().getMonth();
+            if (month >= 2 && month <= 4) return "spring";
+            if (month >= 5 && month <= 7) return "summer"; 
+            if (month >= 8 && month <= 10) return "fall";
+            return "winter";
+        }
+
+        // Get mood-appropriate images
+        function getImagesByMood(targetMood = null) {
+            const currentSeason = getCurrentSeason();
+            let availableImages = animalImages.filter(img => 
+                img.season === "all" || img.season === currentSeason
+            );
+            
+            if (targetMood) {
+                const moodImages = availableImages.filter(img => img.mood === targetMood);
+                return moodImages.length > 0 ? moodImages : availableImages;
+            }
+            
+            return availableImages;
+        }
+
+        // Self-care activities with emojis
+        const selfCareActivities = [
+            {emoji: "🛁", name: "Bubble Bath", description: "Relax in warm bubbles with candles"},
+            {emoji: "🧴", name: "Face Mask", description: "Pamper your skin with a luxurious mask"}, 
+            {emoji: "🧘‍♀️", name: "Meditation", description: "Find your zen with mindful breathing"},
+            {emoji: "📓", name: "Journal Time", description: "Write your thoughts and gratitude"},
+            {emoji: "🤸‍♀️", name: "Yoga Flow", description: "Stretch and strengthen your body"},
+            {emoji: "📚", name: "Tea & Book", description: "Cozy reading time with your favorite brew"},
+            {emoji: "🌿", name: "Nature Walk", description: "Fresh air and peaceful steps outside"},
+            {emoji: "🎵", name: "Music Time", description: "Dance or relax to your favorite songs"}
+        ];
+
+        // Updated wheel activities for kiddos with emojis and descriptions
+        const wheelActivities = [
+            {emoji: "👻", name: "Ghost Story Night", description: "Spooky tales with flashlights under blankets!"},
+            {emoji: "😴", name: "Cat Coma Game", description: "Who can pretend to sleep longest? First to open eyes loses!"},
+            {emoji: "💧", name: "Water Mouth Challenge", description: "Try not to laugh with water in your mouth!"},
+            {emoji: "🥷", name: "Ninja Battle", description: "Stealth mode activated - ninja training time!"},
+            {emoji: "🖤", name: "Friday 13th Tea Party", description: "Elegant tea party with a spooky twist!"},
+            {emoji: "🎨", name: "Arts & Crafts", description: "Create amazing masterpieces together!"},
+            {emoji: "💃", name: "Dance Party", description: "Turn up the music and move those feet!"},
+            {emoji: "🔬", name: "Science Fun", description: "Cool experiments and amazing discoveries!"},
+            {emoji: "🧁", name: "Baking Adventure", description: "Sweet treats and kitchen magic!"}
+        ];
+
+        let isSpinning = false;
+        let isSelfCareSpinning = false;
+
+        function getAnimalPic(forcedMood = null) {
+            const timeOfDay = new Date().getHours();
+            let targetMood = forcedMood;
+            
+            // Auto mood selection based on time of day if no forced mood
+            if (!targetMood) {
+                if (timeOfDay >= 6 && timeOfDay < 10) targetMood = "energetic"; // Morning energy
+                else if (timeOfDay >= 10 && timeOfDay < 14) targetMood = "productive"; // Productive hours  
+                else if (timeOfDay >= 14 && timeOfDay < 18) targetMood = "fun"; // Afternoon fun
+                else if (timeOfDay >= 18 && timeOfDay < 22) targetMood = "cozy"; // Evening cozy
+                else targetMood = "peaceful"; // Night time
+            }
+            
+            const availableImages = getImagesByMood(targetMood);
+            const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+            const content = document.getElementById('animal-pic-content');
+            
+            // Seasonal styling
+            const currentSeason = getCurrentSeason();
+            let seasonalStyle = "";
+            switch(currentSeason) {
+                case "spring": seasonalStyle = "background: linear-gradient(135deg, #ffeaa7, #fab1a0); border-color: #00b894;"; break;
+                case "summer": seasonalStyle = "background: linear-gradient(135deg, #74b9ff, #0984e3); border-color: #fdcb6e;"; break;
+                case "fall": seasonalStyle = "background: linear-gradient(135deg, #e17055, #d63031); border-color: #e84393;"; break;
+                case "winter": seasonalStyle = "background: linear-gradient(135deg, #ddd, #74b9ff); border-color: #6c5ce7;"; break;
+            }
+            
+            content.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="${seasonalStyle} border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 3px solid; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+                        <div style="background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; margin-bottom: 10px;">
+                            <div style="font-size: 1.3em; margin-bottom: 10px; font-weight: bold;">${randomImage.caption}</div>
+                            <div style="color: #666; font-style: italic; line-height: 1.4;">${randomImage.description}</div>
+                        </div>
+                        
+                        <!-- Image display area -->
+                        <div style="text-align: center; margin: 15px 0;">
+                            <img id="animal-image-${Date.now()}" 
+                                 src="images/${randomImage.category}/${randomImage.imageName}" 
+                                 alt="${randomImage.description}"
+                                 style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.15); display: none;"
+                                 onload="this.style.display='block'; this.nextElementSibling.style.display='none';"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            
+                            <!-- Fallback when image not uploaded yet -->
+                            <div style="background: rgba(255,255,255,0.9); border-radius: 12px; padding: 25px; border: 2px dashed #ff6b6b; max-width: 300px; margin: 0 auto; text-align: center;">
+                                <div style="font-size: 1.1em; color: #ff6b6b; margin-bottom: 8px;">📸 ${randomImage.imageName}</div>
+                                <div style="color: #666; font-size: 0.85em; line-height: 1.4;">Upload this AI-generated image to:<br><code style="background: #f5f5f5; padding: 2px 6px; border-radius: 4px; font-size: 0.8em;">/images/${randomImage.category}/</code></div>
+                            </div>
+                        </div>
+                        
+                        <div style="color: #555; font-size: 0.9em; margin-top: 10px;">
+                            Season: ${currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)} | 
+                            Mood: ${randomImage.mood.charAt(0).toUpperCase() + randomImage.mood.slice(1)} | 
+                            Category: ${randomImage.category.charAt(0).toUpperCase() + randomImage.category.slice(1)}
+                        </div>
+                    </div>
+                    
+                    <div style="color: #ff6b6b; font-size: 0.9em; font-weight: bold;">
+                        🎨 Perfect ${currentSeason} vibes for your ${timeOfDay < 12 ? 'morning' : timeOfDay < 18 ? 'afternoon' : 'evening'}! 🎨
+                    </div>
+                </div>
+            `;
+            
+            content.classList.add('show');
+        }
+
+        function getCuteAnimal() {
+            const randomAnimal = animalFacts[Math.floor(Math.random() * animalFacts.length)];
+            const content = document.getElementById('animal-content');
+            
+            content.innerHTML = `
+                <div style="text-align: center;">
+                    <h3 style="color: #ff6b6b; margin-bottom: 10px;">${randomAnimal.animal}</h3>
+                    <p style="margin-bottom: 10px;"><strong>Amazing Fact:</strong> ${randomAnimal.fact}</p>
+                    <p style="color: #666; font-style: italic;">${randomAnimal.description}</p>
+                </div>
+            `;
+            
+            content.classList.add('show');
+        }
+
+        function getInspiration() {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            const content = document.getElementById('quote-content');
+            
+            content.innerHTML = `
+                <div class="quote-text">"${randomQuote.text}"</div>
+                <div class="quote-author">— ${randomQuote.author}</div>
+            `;
+            
+            content.classList.add('show');
+        }
+
+        function getFunnyStory() {
+            const randomStory = funnyStories[Math.floor(Math.random() * funnyStories.length)];
+            const content = document.getElementById('story-content');
+            
+            content.innerHTML = `
+                <div class="story-text">
+                    <h4 style="color: #ff6b6b; margin-bottom: 10px;">${randomStory.title}</h4>
+                    <p>${randomStory.story}</p>
+                </div>
+            `;
+            
+            content.classList.add('show');
+        }
+
+        function getTip() {
+            const randomTip = tips[Math.floor(Math.random() * tips.length)];
+            const content = document.getElementById('tip-content');
+            
+            content.innerHTML = `<div class="tip-text">${randomTip}</div>`;
+            content.classList.add('show');
+        }
+
+        function spinSelfCareWheel() {
+            if (isSelfCareSpinning) return;
+            
+            isSelfCareSpinning = true;
+            const wheel = document.getElementById('selfcare-wheel');
+            const result = document.getElementById('selfcare-result');
+            
+            // Random rotation (multiple full spins + random position)
+            const spins = 5 + Math.floor(Math.random() * 5); // 5-9 full rotations
+            const finalRotation = Math.floor(Math.random() * 360);
+            const totalRotation = (spins * 360) + finalRotation;
+            
+            wheel.style.transform = `rotate(${totalRotation}deg)`;
+            
+            // Calculate which section we landed on (8 sections)
+            const sectionAngle = 360 / 8;
+            const normalizedAngle = (360 - (finalRotation % 360)) % 360;
+            const sectionIndex = Math.floor(normalizedAngle / sectionAngle);
+            
+            setTimeout(() => {
+                const activity = selfCareActivities[sectionIndex];
+                result.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5em; margin-bottom: 5px;">${activity.emoji}</div>
+                        <div style="font-size: 1.1em; font-weight: bold; margin-bottom: 5px;">${activity.name}</div>
+                        <div style="font-size: 0.9em; color: #666; font-style: italic;">${activity.description}</div>
+                    </div>
+                `;
+                isSelfCareSpinning = false;
+            }, 3000);
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            
+            isSpinning = true;
+            const wheel = document.getElementById('wheel');
+            const result = document.getElementById('wheel-result');
+            
+            // Random rotation (multiple full spins + random position)
+            const spins = 5 + Math.floor(Math.random() * 5); // 5-9 full rotations
+            const finalRotation = Math.floor(Math.random() * 360);
+            const totalRotation = (spins * 360) + finalRotation;
+            
+            wheel.style.transform = `rotate(${totalRotation}deg)`;
+            
+            // Calculate which section we landed on (9 sections)
+            const sectionAngle = 360 / 9;
+            const normalizedAngle = (360 - (finalRotation % 360)) % 360;
+            const sectionIndex = Math.floor(normalizedAngle / sectionAngle);
+            
+            setTimeout(() => {
+                const activity = wheelActivities[sectionIndex];
+                result.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5em; margin-bottom: 5px;">${activity.emoji}</div>
+                        <div style="font-size: 1.1em; font-weight: bold; margin-bottom: 5px;">${activity.name}</div>
+                        <div style="font-size: 0.9em; color: #666; font-style: italic;">${activity.description}</div>
+                    </div>
+                `;
+                isSpinning = false;
+            }, 3000);
+        }
+
+        // Add some sparkle effects
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.innerHTML = '✨';
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = Math.random() * window.innerWidth + 'px';
+            sparkle.style.top = Math.random() * window.innerHeight + 'px';
+            sparkle.style.fontSize = '20px';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.animation = 'fadeOut 2s ease-out forwards';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        // Add sparkles occasionally
+        setInterval(createSparkle, 3000);
+
+        // PWA Service Worker Registration (only when deployed)
+        if ('serviceWorker' in navigator && window.location.hostname !== 'www.claudeusercontent.com') {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(err) {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
+        // PWA Install Prompt (only when deployed)
+        let deferredPrompt;
+        if (window.location.hostname !== 'www.claudeusercontent.com') {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                
+                // Show install button after 30 seconds of use
+                setTimeout(() => {
+                    if (deferredPrompt) {
+                        const installBanner = document.createElement('div');
+                        installBanner.innerHTML = `
+                            <div style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(45deg, #ff6b6b, #ff8e8e); color: white; padding: 15px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 1000; text-align: center;">
+                                <div style="margin-bottom: 10px;">💖 Install App4QT on your phone! 💖</div>
+                                <button onclick="installApp()" style="background: white; color: #ff6b6b; border: none; padding: 8px 16px; border-radius: 10px; font-weight: bold; margin-right: 10px;">Install</button>
+                                <button onclick="dismissInstall()" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 10px;">Later</button>
+                            </div>
+                        `;
+                        installBanner.id = 'install-banner';
+                        document.body.appendChild(installBanner);
+                    }
+                }, 30000);
+            });
+        }
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                    dismissInstall();
+                });
+            }
+        }
+
+        function dismissInstall() {
+            const banner = document.getElementById('install-banner');
+            if (banner) banner.remove();
+        }
+
+        // CSS for sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                0% { opacity: 1; transform: translateY(0) scale(1); }
+                100% { opacity: 0; transform: translateY(-50px) scale(0.5); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
